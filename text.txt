@@ -1,0 +1,15 @@
+Hybrid PPO_UnetSegmentor(RL_unet)
+
+Model & Architecture Details
+Model Name: PPOUnetSegmentor.
+Base Architecture: U-Net with a ResNet50 encoder (Sigmoid activation).
+Actor-Critic Integration: * RL Backbone: A small convolutional head (Conv2d -> ReLU -> AdaptiveAvgPool2d) that extracts 16 features from the predicted mask.
+Actor Head: A linear layer that maps those features to 3 discrete actions (using Softmax).
+Critic Head: A linear layer that predicts a single value (the estimated "reward" or state value).
+Training Parameters
+Epochs: 100.
+Image Size: 384 × 384 pixels.
+Batch Size: 4.
+Learning Rate (LR): 0.0001
+Loss Function: Total loss = 0.5* Dice Loss + 0.5 * BCE Loss.
+ This is more robust for segmentation than BCE alone, as it directly optimizes for the overlap (Dice).
